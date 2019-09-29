@@ -23,7 +23,7 @@ except Exception as e:
 #     os.environ['PATH'] = sys._MEIPASS + ";" + os.environ['PATH']
 from PyQt5.Qt import QCursor, QAbstractItemView
 # from PyQt5.uic import loadUi
-from PyQt5.QtCore import pyqtSlot, QDir, Qt
+from PyQt5.QtCore import  QDir, Qt
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QMainWindow, QFileSystemModel, QMenu, QInputDialog, QTreeWidgetItem, QApplication
 # from PyQt5.QtWidgets import QTreeWidgetItemIterator
@@ -32,13 +32,12 @@ from shutil import copy2
 from fileutil import *
 from fmconfig import *
 from bookmark import *
-from menu import *
 from exception_handler import *
 from scriptmanager import *
 from FileM_ui import *
 from root_list_test import *
 
-user_home_path = QDir.home().absolutePath()
+user_home_path = QDir().home().absolutePath()
 home_path = user_home_path + "/FileM"
 
 
@@ -81,7 +80,7 @@ class FileM(QMainWindow, Ui_FileM):
         try:
             self.lattice_model = LatticeModel(file_name.replace('.', '') + '_lattice')
             self.tree_model = Lattice2TreeModel(file_name.replace('.', '') + '_tree')
-        except e:
+        except Exception as e:
             print('连接数据库失败')
 
 
@@ -226,6 +225,7 @@ class FileM(QMainWindow, Ui_FileM):
             for col in range(1, col_length):
                 child_count = child.childCount()
                 flags = True
+                i = 0
                 for i in range(child_count):
                     # child = child.child(i)
                     if child.child(i).text(0) == root_list_t[row][col]:
@@ -318,13 +318,11 @@ class FileM(QMainWindow, Ui_FileM):
     # def on_lw_sidebar_db_clicked(self):
     #     # 双击侧边栏动作
 
-    @pyqtSlot()
     def on_pb_load_path_clicked(self):
         # 更新文件列表
         root = self.fileSystemModel.setRootPath(self.le_path.text())
         self.lw_main.setRootIndex(root)
-    
-    @pyqtSlot()
+
     def on_lw_main_clicked(self):
         # 单击文件
         # if self.lw_main.selectionMode() == Qt.ControlModifier:
@@ -345,7 +343,6 @@ class FileM(QMainWindow, Ui_FileM):
         else:
             print(type(sub_path))
 
-    @pyqtSlot()
     def on_lw_main_db_clicked(self):
         # 双击文件
         cur_item_index = self.lw_main.currentIndex()
@@ -366,7 +363,6 @@ class FileM(QMainWindow, Ui_FileM):
             self.le_path.setText(sub_path)
             self.on_pb_load_path_clicked()
 
-    @pyqtSlot()
     def on_lw_catalogue_clicked(self):
         # 若在目录中单击文件(叶节点)，则在文件列表中定位到该标签
         # 若在目录中单击标签，则在文件列表中定位拥有该标签的所有文件
@@ -386,7 +382,6 @@ class FileM(QMainWindow, Ui_FileM):
             pass
         pass
 
-    @pyqtSlot()
     def on_lw_catalogue_db_clicked(self):
         # 若在目录中双击文件，则打开文件
         # 若在目录中双击标签，不操作
@@ -414,7 +409,7 @@ class FileM(QMainWindow, Ui_FileM):
                 self.action_del_label.addActions(actions)
                 # for i in actions:
                 #     self.action_del_label.addAction(i)
-                action = self.file_menu.exec_(QCursor.pos())  # 单击菜单action时
+                action = self.file_menu.exec_(QCursor.pos)  # 单击菜单action时
                 if action:
                     script_name = action.text()
                     file_path = self.le_path.text()
