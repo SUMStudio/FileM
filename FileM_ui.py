@@ -2,14 +2,11 @@
 
 # Form implementation generated from reading ui file 'FileM.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.0
+# Created by: PyQt5 UI code generator 5.11.3
 #
 # WARNING! All changes made in this file will be lost!
 
-
 from PyQt5 import QtCore, QtGui, QtWidgets
-from RebuildMethod import QListWidgetRebuild
-
 
 class Ui_FileM(object):
     def setupUi(self, FileM):
@@ -68,7 +65,6 @@ class Ui_FileM(object):
         self.lw_catalogue.setDragDropMode(QtWidgets.QAbstractItemView.NoDragDrop)
         self.lw_catalogue.setDefaultDropAction(QtCore.Qt.IgnoreAction)
         self.lw_catalogue.setObjectName("lw_catalogue")
-        self.lw_catalogue.headerItem().setText(0, "1")
         self.lw_main = QtWidgets.QListView(self.splitter)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(5)
@@ -83,8 +79,7 @@ class Ui_FileM(object):
         self.lw_main.setResizeMode(QtWidgets.QListView.Adjust)
         self.lw_main.setLayoutMode(QtWidgets.QListView.SinglePass)
         self.lw_main.setObjectName("lw_main")
-        # self.lw_sidebar = QtWidgets.QListWidget(self.splitter)
-        self.lw_sidebar = QListWidgetRebuild(self.splitter)
+        self.lw_sidebar = QtWidgets.QListWidget(self.splitter)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(2)
         sizePolicy.setVerticalStretch(0)
@@ -100,6 +95,20 @@ class Ui_FileM(object):
         self.lw_sidebar.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectItems)
         self.lw_sidebar.setObjectName("lw_sidebar")
         self.gridLayout.addWidget(self.splitter, 2, 0, 1, 2)
+        self.horizontalLayout = QtWidgets.QHBoxLayout()
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.btn_updatetree = QtWidgets.QPushButton(self.centralwidget)
+        self.btn_updatetree.setObjectName("btn_updatetree")
+        self.horizontalLayout.addWidget(self.btn_updatetree)
+        self.btn_loadtree = QtWidgets.QPushButton(self.centralwidget)
+        self.btn_loadtree.setObjectName("btn_loadtree")
+        self.horizontalLayout.addWidget(self.btn_loadtree)
+        self.btn_updatelattice = QtWidgets.QPushButton(self.centralwidget)
+        self.btn_updatelattice.setObjectName("btn_updatelattice")
+        self.horizontalLayout.addWidget(self.btn_updatelattice)
+        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem)
+        self.gridLayout.addLayout(self.horizontalLayout, 1, 0, 1, 1)
         FileM.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(FileM)
         self.statusbar.setObjectName("statusbar")
@@ -117,5 +126,8 @@ class Ui_FileM(object):
         self.lb_sidebar.setText(_translate("FileM", "收藏夹"))
         self.QLabl.setText(_translate("FileM", "TextLabelTest"))
         self.le_path.setText(_translate("FileM", "/tmp"))
+        self.btn_updatetree.setText(_translate("FileM", "更新数据库并加载目录树"))
+        self.btn_loadtree.setText(_translate("FileM", "仅从数据库加载树"))
+        self.btn_updatelattice.setText(_translate("FileM", "仅更新格"))
         self.toolBar.setWindowTitle(_translate("FileM", "toolBar"))
 
