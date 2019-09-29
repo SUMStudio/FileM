@@ -2,12 +2,13 @@
 
 # Form implementation generated from reading ui file 'FileM.ui'
 #
-# Created by: PyQt5 UI code generator 5.11.3
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
-from RebuildMethod import QListWidgetRebuild
+
 
 class Ui_FileM(object):
     def setupUi(self, FileM):
@@ -66,6 +67,7 @@ class Ui_FileM(object):
         self.lw_catalogue.setDragDropMode(QtWidgets.QAbstractItemView.NoDragDrop)
         self.lw_catalogue.setDefaultDropAction(QtCore.Qt.IgnoreAction)
         self.lw_catalogue.setObjectName("lw_catalogue")
+        self.lw_catalogue.headerItem().setText(0, "1")
         self.lw_main = QtWidgets.QListView(self.splitter)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(5)
@@ -80,7 +82,6 @@ class Ui_FileM(object):
         self.lw_main.setResizeMode(QtWidgets.QListView.Adjust)
         self.lw_main.setLayoutMode(QtWidgets.QListView.SinglePass)
         self.lw_main.setObjectName("lw_main")
-        # self.lw_sidebar = QtWidgets.QListWidget(self.splitter)
         self.lw_sidebar = QListWidgetRebuild(self.splitter)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(2)
@@ -132,4 +133,4 @@ class Ui_FileM(object):
         self.btn_loadtree.setText(_translate("FileM", "仅从数据库加载树"))
         self.btn_updatelattice.setText(_translate("FileM", "仅更新格"))
         self.toolBar.setWindowTitle(_translate("FileM", "toolBar"))
-
+from RebuildMethod import QListWidgetRebuild
