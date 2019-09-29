@@ -116,9 +116,6 @@ class FileM(QMainWindow, Ui_FileM):
         # 初始化目录树
         self.lw_catalogue.setColumnCount(1)
         self.lw_catalogue.setHeaderLabels(['目录'])
-        root = QTreeWidgetItem(self.lw_catalogue)
-        root.setText(0, "root")
-        self.lw_catalogue.addTopLevelItem(root)
         self.lw_catalogue.setColumnWidth(0, 80)
         self.root_list = root_list
         self.init_catalogue()
@@ -215,7 +212,11 @@ class FileM(QMainWindow, Ui_FileM):
 
     # 生成目录树
     def init_catalogue(self):
-        root = self.lw_catalogue.topLevelItem(0)
+        self.lw_catalogue.clear()
+        root = QTreeWidgetItem(self.lw_catalogue)
+        root.setText(0, "root")
+        self.lw_catalogue.addTopLevelItem(root)
+        # root = self.lw_catalogue.topLevelItem(0)
         # child = root
         root_list_t = self.root_list
         row_length = len(root_list_t)

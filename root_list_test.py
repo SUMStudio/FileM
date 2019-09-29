@@ -24,7 +24,7 @@ root_list = [['root', 'test1', 'test4', '文本(9).txt'], ['root', 'test1', 'tes
              ['root', 'test5', '文本(7).txt'],
              ['root', 'test5', '文本(7).jpg'],
              ['root', 'test5', '文本(7).png'],
-             ['root', 'test5', '文本(7).jpeg'],
+             ['root', 'test5', '文本(7).xxx'],
              ['root', 'test5', '文本(7).iso'],
              ['root', 'test5', '文本(7).dll'],
              ['root', 'test5', '文本(7).pkg'],
