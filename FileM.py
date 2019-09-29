@@ -11,6 +11,9 @@ from subprocess import call
 from os.path import basename   # join, dirname, isdir, isfile, exists
 # from os import makedirs
 # noinspection PyBroadException
+from database.model.lattice.LatticeModel import LatticeModel
+from database.model.tree.Lattice2TreeModel import Lattice2TreeModel
+
 try:
     from os import startfile
 except Exception as e:
@@ -69,6 +72,20 @@ class FileM(QMainWindow, Ui_FileM):
         self.lw_main.setWrapping(True)      # 布局设置,不允许文件列表多列显示
         self.le_path.returnPressed.connect(self.on_pb_load_path_clicked)    # 在地址栏按下Enter键发出信号(响应回车键)
 
+        # 初始化调试区按钮
+        self.btn_updatetree.clicked.connect(self.on_btn_clicked)
+        self.btn_loadtree.clicked.connect(self.on_btn_clicked)
+        self.btn_updatelattice.clicked.connect(self.on_btn_clicked)
+        # 初始化数据模型
+        file_name = "musiccsv"
+        try:
+            self.lattice_model = LatticeModel(file_name.replace('.', '') + '_lattice')
+            self.tree_model = Lattice2TreeModel(file_name.replace('.', '') + '_tree')
+        except e:
+            print('连接数据库失败')
+
+
+
         # 初始化工具栏
         self.init_toolbar()
         self.bookmark_list = get_bookmark()
@@ -104,7 +121,8 @@ class FileM(QMainWindow, Ui_FileM):
         root.setText(0, "root")
         self.lw_catalogue.addTopLevelItem(root)
         self.lw_catalogue.setColumnWidth(0, 80)
-        self.init_catalogue(root_list)
+        self.root_list = root_list
+        self.init_catalogue()
 
         self.lw_catalogue.clicked.connect(self.on_lw_catalogue_clicked)  # 单击目录中的某个文件时
         self.lw_catalogue.doubleClicked.connect(self.on_lw_catalogue_db_clicked)  # 双击目录中的某个文件时
@@ -113,6 +131,29 @@ class FileM(QMainWindow, Ui_FileM):
         # 调用Drops方法，允许拖入
         self.setAcceptDrops(True)
         # self.setDragEnabled(True)    # 可在QT designer内实现
+
+    def on_btn_clicked(self):
+        sender = self.sender()
+        if sender == self.btn_updatetree:
+            pass
+        elif sender == self.btn_loadtree:
+            # 从数据库中加载目录树
+            self.root_list = list()
+
+            for path in self.tree_model.get_root2leaf_path():
+                print(path)
+                for file_name in path[-1]:
+                    temp_path = list()
+                    for dir_name in path[:-1]:
+                        temp_path.append(dir_name[0])
+                    temp_path.append(file_name)
+                    self.root_list.append(temp_path)
+            self.init_catalogue()
+            # print(self.root_list)
+        elif sender == self.btn_updatelattice:
+            pass
+
+
 
     def dragEnterEvent(self, evn):
         # 鼠标拖入窗口事件，待续
@@ -174,9 +215,10 @@ class FileM(QMainWindow, Ui_FileM):
         self.toolBar.actionTriggered[QAction].connect(self.on_toolbar_clicked)  # 发送信号执行操作
 
     # 生成目录树
-    def init_catalogue(self, root_list_t):
+    def init_catalogue(self):
         root = self.lw_catalogue.topLevelItem(0)
         # child = root
+        root_list_t = self.root_list
         row_length = len(root_list_t)
         for row in range(row_length):
             col_length = len(root_list_t[row])
