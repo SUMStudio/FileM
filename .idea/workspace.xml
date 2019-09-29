@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f38da21a-cf93-42e6-b088-dded7dabb94f" name="默认更改列表" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/FileM.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/FileM.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileM.py" beforeDir="false" afterPath="$PROJECT_DIR$/FileM.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/root_list_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/root_list_test.py" afterDir="false" />
     </list>
-    <list id="9ff34f83-9203-4df6-812b-8db49c2e99a9" name="修改init_catalogue(),每次生成新的目录之前清空原目录" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,6 +23,11 @@
     </findStrings>
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="springtwr &lt;springtwr@outlook.com&gt;" />
+      </list>
+    </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="master" />
@@ -36,18 +35,13 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="-11" />
-    <option name="width" value="1941" />
-    <option name="height" value="1053" />
-  </component>
   <component name="ProjectId" id="1RSAlVMhXwCqHczzjVOwFNg0obB" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../FileMtemp" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/../../FileMtemp/FileM_ui.ui" />
   </component>
   <component name="RunDashboard">
@@ -166,7 +160,6 @@
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="f38da21a-cf93-42e6-b088-dded7dabb94f" name="默认更改列表" comment="" />
-      <changelist id="9ff34f83-9203-4df6-812b-8db49c2e99a9" name="修改init_catalogue(),每次生成新的目录之前清空原目录" comment="" />
       <created>1569650274358</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -175,8 +168,19 @@
       <workItem from="1569660758479" duration="16007000" />
       <workItem from="1569680061975" duration="5156000" />
       <workItem from="1569692033277" duration="16711000" />
-      <workItem from="1569735978404" duration="398000" />
+      <workItem from="1569735978404" duration="671000" />
+      <workItem from="1569736887730" duration="121000" />
+      <workItem from="1569738057128" duration="1354000" />
+      <workItem from="1569739535185" duration="536000" />
     </task>
+    <task id="LOCAL-00001" summary="修改init_catalogue(),每次生成新的目录之前清空原目录">
+      <created>1569736574446</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1569736574446</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -199,6 +203,7 @@
                   </entry>
                 </map>
               </option>
+              <option name="COLUMN_ORDER" />
             </State>
           </value>
         </entry>
@@ -231,20 +236,24 @@
       </map>
     </option>
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="修改init_catalogue(),每次生成新的目录之前清空原目录" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改init_catalogue(),每次生成新的目录之前清空原目录" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/FileM.py</url>
-          <line>8</line>
-          <option name="timeStamp" value="1" />
+          <line>79</line>
+          <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/FileM$tree.coverage" NAME="tree Coverage Results" MODIFIED="1569680807455" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../../编程学习/Python3/PyQt5/qt_test" />
-    <SUITE FILE_PATH="coverage/FileM$main.coverage" NAME="main Coverage Results" MODIFIED="1569736376576" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/FileM$main.coverage" NAME="main Coverage Results" MODIFIED="1569740192003" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/FileM$tree_example1.coverage" NAME="tree_example1 Coverage Results" MODIFIED="1569681860443" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../../编程学习/Python3/PyQt5" />
     <SUITE FILE_PATH="coverage/FileM$test.coverage" NAME="test Coverage Results" MODIFIED="1569666617142" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../../编程学习/Python3/PyQt5/qt_test" />
   </component>

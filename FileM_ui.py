@@ -7,6 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from RebuildMethod import QListWidgetRebuild
 
 class Ui_FileM(object):
     def setupUi(self, FileM):
@@ -79,7 +80,8 @@ class Ui_FileM(object):
         self.lw_main.setResizeMode(QtWidgets.QListView.Adjust)
         self.lw_main.setLayoutMode(QtWidgets.QListView.SinglePass)
         self.lw_main.setObjectName("lw_main")
-        self.lw_sidebar = QtWidgets.QListWidget(self.splitter)
+        # self.lw_sidebar = QtWidgets.QListWidget(self.splitter)
+        self.lw_sidebar = QListWidgetRebuild(self.splitter)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(2)
         sizePolicy.setVerticalStretch(0)
