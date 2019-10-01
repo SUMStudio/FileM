@@ -6,43 +6,31 @@ import copy
 
 
 def add_concept(lattice_model: LatticeModel, new_concept: ConceptNodeModel):
-
     # 概念格为空时
     if lattice_model.get_node_count() == 0:
+        # 初始化最顶层节点
+        sup  = ConceptNodeModel(intents=set(),extents=new_concept.extents)
+        lattice_model.add_node(sup)
+        lattice_model.set_sup_or_inf_node(sup.id, 0)
         # 初始化最底层节点
+        inf = ConceptNodeModel(intents=new_concept.intents, extents=set())
+        lattice_model.add_node(inf)
+        lattice_model.set_sup_or_inf_node(inf.id, 1)
+        # 加入新概念
         lattice_model.add_node(new_concept)
-        lattice_model.set_sup_or_inf_node(new_concept.id, 1)
+        # 连接新概念和上下两个节点
+        lattice_model.add_edge(node_id_from=sup.id,node_id_to=new_concept.id)
+        lattice_model.add_edge(node_id_from=new_concept.id, node_id_to=inf.id)
         print("初始化概念格")
         return
     # 加入新属性时
     # 取底层节点
     inf = lattice_model.get_node_base_on_category(1)
-
     if not (ConceptAlgo.is_inclusion(new_concept.intents, inf.intents)):
         if len(inf.extents) == 0:
             new_intents = inf.intents | new_concept.intents
             # 在数据库中更新内涵
             lattice_model.update_node_property(node_id=inf.id, intents=new_intents)
-        else:
-            # 初始化第二个节点时
-            # 初始化最顶层节点
-            sup = ConceptNodeModel(extents=inf.extents, intents=set())
-            lattice_model.add_node(sup)
-            lattice_model.set_sup_or_inf_node(sup.id, 0)
-            # 更新inf
-            new_inf = ConceptNodeModel(extents=set(), intents=set(inf.intents | new_concept.intents))
-            temp_intents = inf.intents
-            temp_extents = inf.extents
-            # 在数据库中更新内涵和外延
-            lattice_model.update_node_property(inf.id, extents=new_inf.extents, intents=new_inf.intents)
-            new_inf.intents = temp_intents
-            new_inf.extents = temp_extents
-            lattice_model.add_node(new_inf)
-            lattice_model.add_edge(node_id_from=new_inf.id, node_id_to=inf.id)
-            # 连接最顶层节点
-            sup = lattice_model.get_node_base_on_category(0)
-            lattice_model.add_edge(node_id_from=sup.id, node_id_to=new_inf.id)
-
     # 存储不同内涵势取交集后概念集合的集合
     all_intersection_concepts: List[Set[int]] = list()
     # 取最顶层节点
@@ -60,7 +48,7 @@ def add_concept(lattice_model: LatticeModel, new_concept: ConceptNodeModel):
             new_concept.intents,
             all_intersection_concepts, lattice_model)
         # 更新概念
-        if is_update_concept:
+        if is_update_concept & (lattice_concept_id != inf.id):
             # 更新外延取并集
             lattice_concept.extents = lattice_concept.extents | new_concept.extents
             # 在数据库中更新

@@ -11,8 +11,11 @@ from subprocess import call
 from os.path import basename   # join, dirname, isdir, isfile, exists
 # from os import makedirs
 # noinspection PyBroadException
+import fmconfig
+from database.model.lattice.ConceptNodeModel import ConceptNodeModel
 from database.model.lattice.LatticeModel import LatticeModel
 from database.model.tree.Lattice2TreeModel import Lattice2TreeModel
+from database.util.ConstructeLattice import add_concept
 
 try:
     from os import startfile
@@ -138,7 +141,6 @@ class FileM(QMainWindow, Ui_FileM):
         elif sender == self.btn_loadtree:
             # 从数据库中加载目录树
             self.root_list = list()
-
             for path in self.tree_model.get_root2leaf_path():
                 print(path)
                 for file_name in path[-1]:
@@ -150,9 +152,22 @@ class FileM(QMainWindow, Ui_FileM):
             self.init_catalogue()
             # print(self.root_list)
         elif sender == self.btn_updatelattice:
-            pass
-
-
+            # 仅更新概念格，耗时较大，建议用线程执行
+            # 读取配置项
+            i_dict = fmconfig.init_dict("global", "labels")
+            # 处理数据Key-文件，Value-标签集合
+            new_dict = dict()
+            for label,file_names in i_dict.items():
+                for file_name in file_names:
+                    if not new_dict.get(file_name):
+                        new_dict[file_name] = set()
+                    new_dict[file_name].add(label)
+            # 增量式构造格
+            # 清空格
+            self.lattice_model.delete_all()
+            for file_name,label_set in new_dict.items():
+                concept = ConceptNodeModel(extents={file_name},intents=label_set)
+                add_concept(self.lattice_model,concept)
 
     def dragEnterEvent(self, evn):
         # 鼠标拖入窗口事件，待续
