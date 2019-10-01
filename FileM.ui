@@ -119,6 +119,11 @@
        <property name="defaultDropAction">
         <enum>Qt::IgnoreAction</enum>
        </property>
+       <column>
+        <property name="text">
+         <string notr="true">1</string>
+        </property>
+       </column>
       </widget>
       <widget class="QListView" name="lw_main">
        <property name="sizePolicy">
@@ -155,7 +160,7 @@
         <enum>QListView::SinglePass</enum>
        </property>
       </widget>
-      <widget class="QListWidget" name="lw_sidebar">
+      <widget class="QListWidgetRebuild" name="lw_sidebar">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
          <horstretch>2</horstretch>
@@ -248,6 +253,13 @@
    </attribute>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QListWidgetRebuild</class>
+   <extends>QListWidget</extends>
+   <header>RebuildMethod</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
