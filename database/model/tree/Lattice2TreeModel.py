@@ -1,4 +1,4 @@
-from database.model.GraphModel import GraphModel
+from database.model.graph_base.GraphModel import GraphModel
 from database.model.lattice.ConceptNodeModel import ConceptNodeModel
 from database.model.tree.TreeNodeModel import TreeNodeModel
 

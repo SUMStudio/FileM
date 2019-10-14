@@ -4,5 +4,5 @@
 """
 
 if __name__ == '__main__':
-    from FileM import main
+    from gui.mainwindow.FileM import main
     main()

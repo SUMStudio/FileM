@@ -1,11 +1,13 @@
+
 from neo4j.v1 import GraphDatabase
 
 
 class Neo4jDriverHelper:
 
-    def __init__(self, label, username='neo4j', password='123456'):
+    def __init__(self, label:str, username='neo4j', password='123456'):
         self._driver = GraphDatabase.driver('bolt://localhost', auth=(username, password))
         self._label = label
+        print("初始化Neo4jDriverHelper")
 
     # 添加一个节点,并返回ID
     def add_node(self, **properties):
@@ -31,12 +33,19 @@ class Neo4jDriverHelper:
             if type(value) == set:
                 value = list(value)
             if type(value) == list:
-                #Neo4jDriverHelper.list2str(value)
+                # Neo4jDriverHelper.list2str(value)
                 property_str = " n.{}={},".format(key, value)
                 statement += property_str
         statement = statement[0:-1]
         with self._driver.session() as session:
             session.run(statement)
+
+    # 删除节点属性
+    def remove_node_property(self, node_id,property_name):
+        statement = "match (n:{}) where id(n)={} remove n.{}".format(self._label, node_id,property_name)
+        with self._driver.session() as session:
+            session.run(statement)
+
 
     # 添加节点间关系
     def add_relationship(self, node_id_from, node_id_to, relationship_name):
@@ -112,15 +121,13 @@ class Neo4jDriverHelper:
             yield record[statement_return]
 
     # 节点逆序排序输出id
-    def get_node_order_desc(self,order_statement):
-        statement = "match (n:{}) return id(n) order by ".format(self._label) + order_statement +" desc"
+    def get_node_order_desc(self, order_statement):
+        statement = "match (n:{}) return id(n) order by ".format(self._label) + order_statement + " desc"
         statement_return = "id(n)"
         with self._driver.session() as session:
             result = session.run(statement)
         for record in result:
             yield record[statement_return]
-
-
 
     # 清空标签下所有节点
     def delete_all(self):
@@ -143,10 +150,17 @@ class Neo4jDriverHelper:
         for record in result:
             yield record[statement_return]
 
-    def run_statement_without_return(self,statement):
+    def run_statement_without_return(self, statement):
         with self._driver.session() as session:
-             session.run(statement)
+            session.run(statement)
 
+    @property
+    def label(self):
+        return self._label
+
+    @label.setter
+    def label(self, label):
+        self._label = label
 
     # 字典转字符串
     @staticmethod

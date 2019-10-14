@@ -1,14 +1,15 @@
-from database.model.GraphModel import GraphModel
-from typing import Set, List
-from database.model.lattice.ConceptNodeModel import ConceptNodeModel
+from typing import List, Set
 
-category_array = ["sup", "inf"]
+from database.model.graph_base.GraphModel import GraphModel
+from database.model.lattice.ConceptNodeModel import ConceptNodeModel
 
 
 class LatticeModel(GraphModel):
     def __init__(self, label):
         # 继承父类方法
         GraphModel.__init__(self, label=label, relationship_name="child")
+        self._label = label
+        self._relationship_name = "child"
 
     # 添加一个节点
     def add_node(self, concept: ConceptNodeModel = None):
@@ -33,8 +34,12 @@ class LatticeModel(GraphModel):
         return node
 
     # 更新节点的属性值
-    def update_node_property(self, node_id:int, **properties):
+    def update_node_property(self, node_id: int, **properties):
         super(LatticeModel, self).update_node_property(node_id, **properties)
+
+    # 删除节点的属性
+    def remove_node_property(self, node_id: int, property_name):
+        super(LatticeModel, self).remove_node_property(node_id, property_name)
 
     # 删除一个节点及其相关边
     def delete_node(self, delete_node_id: int):
@@ -64,19 +69,41 @@ class LatticeModel(GraphModel):
     def get_node_id_order_by_intents_length_desc(self):
         return super(LatticeModel, self).get_node_order_desc('length(n.intents)')
 
-    # 取节点的数量
     def get_node_count(self) -> int:
+        """取节点数量"""
         return super(LatticeModel, self).get_node_count()
 
-    # 初始化节点为sup或inf
-    def set_sup_or_inf_node(self, node_id: int, category: int):
-        value = category_array[category]
-        super(LatticeModel, self).add_node_property(node_id=node_id, category=value)
+    def set_sup_node(self, node_id: int = -1):
+        """将节点置为sup节点,若不指定id,则入度为0的节点为sup节点"""
+        if node_id != -1:
+            super(LatticeModel, self).add_node_property(node_id=node_id, is_sup=True)
+        else:
+            statement = "match (n:{}) with n,size(()-[:{}]->(n)) as InDepth where InDepth=0 set n.is_sup = True return n limit 1".format(
+                self._label, self._relationship_name)
+            super(LatticeModel, self).run_statement_without_return(statement)
 
-    # 取sup或inf节点
-    def get_node_base_on_category(self, category: int = 0) -> ConceptNodeModel:
-        value = "\"" + category_array[category] + "\""
-        node_info = super(LatticeModel, self).get_node_base_on_property(property_name="category", value=value,
+    def set_inf_node(self, node_id: int = -1):
+        """将节点置为inf节点,若不指定id,则出度为0的节点为inf节点"""
+        if node_id != -1:
+            super(LatticeModel, self).add_node_property(node_id=node_id, is_inf=True)
+        else:
+            statement = "match (n:{}) with n,size((n)-[:{}]->()) as OutDepth where OutDepth=0 set n.is_inf = True return n limit 1".format(
+                self._label, self._relationship_name)
+            super(LatticeModel, self).run_statement_without_return(statement)
+
+    def get_sup_node(self)->ConceptNodeModel:
+        """取sup节点"""
+        node_info = super(LatticeModel, self).get_node_base_on_property(property_name="is_sup", value=True,
+                                                                        limit=1)
+        node_info = node_info.__next__()
+        extents = set(node_info['extents']) if node_info['extents'] else set()
+        intents = set(node_info['intents']) if node_info['intents'] else set()
+        node = ConceptNodeModel(node_id=node_info.id, extents=extents, intents=intents)
+        return node
+
+    def get_inf_node(self)->ConceptNodeModel:
+        """取inf节点"""
+        node_info = super(LatticeModel, self).get_node_base_on_property(property_name="is_inf", value=True,
                                                                         limit=1)
         node_info = node_info.__next__()
         extents = set(node_info['extents']) if node_info['extents'] else set()

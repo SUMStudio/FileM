@@ -1,6 +1,6 @@
 from typing import Set
 
-from database.model.NodeModel import NodeModel
+from database.model.graph_base.NodeModel import NodeModel
 
 
 class TreeNodeModel(NodeModel):

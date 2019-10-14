@@ -6,14 +6,14 @@ from os.path import join
 from shutil import rmtree
 from os.path import isfile, isdir
 
-import fmconfig
+from util.SingletonConfigEditor import SingletonConfigEditor
 
 
 class delete_file:
     def execute(self, script_variable):
         cur_path = script_variable["cur_path"]
         file_list = script_variable["file_list"]
-        i_dict = fmconfig.init_dict("global", "labels")
+        i_dict = SingletonConfigEditor.instance().init_dict("global", "labels")
         i_del = []
         for file in file_list:
             file_path = join(cur_path, file)
@@ -33,4 +33,4 @@ class delete_file:
                 print("删除目录成功，" + file_path)
             else:
                 print("无法删除的项目")
-            fmconfig.dict_add("global", "labels", i_dict)
+            SingletonConfigEditor.instance().dict_add("global", "labels", i_dict)
