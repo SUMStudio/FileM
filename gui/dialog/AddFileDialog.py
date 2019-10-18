@@ -1,11 +1,11 @@
-import sys
+
 
 from PyQt5.QtCore import QModelIndex
-from PyQt5.QtWidgets import QDialog, QApplication
+from PyQt5.QtWidgets import QDialog
 from gui.dialog.AddFileDialogController import AddFileDialogController
 from gui.dialog.AddFileDialog_ui import Ui_AddFileDialog
 from model.FileModel import FileModel
-from util.SingletonFileLabelManager import SingletonFileLabelManager
+from util.FileLabelManager import FileLabelManager
 
 
 class AddFileDialog(QDialog, Ui_AddFileDialog):
@@ -23,7 +23,7 @@ class AddFileDialog(QDialog, Ui_AddFileDialog):
         self.btn_newlabel.clicked.connect(self._controller.on_btn_clicked)
         self.btn_removelabel.clicked.connect(self._controller.on_btn_clicked)
         # 绑定数据源
-        self.lv_label.setModel(SingletonFileLabelManager.instance().label_list_model)
+        self.lv_label.setModel(FileLabelManager().label_list_model)
 
     @property
     def file_model(self):
@@ -33,8 +33,3 @@ class AddFileDialog(QDialog, Ui_AddFileDialog):
     def index(self):
         return self._index
 
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    dialog = AddFileDialog()
-    dialog.show()
-    sys.exit(app.exec_())

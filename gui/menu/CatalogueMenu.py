@@ -1,8 +1,9 @@
 from PyQt5.QtCore import QModelIndex
 from PyQt5.QtWidgets import QAction, QMenu, QTreeView
 
+from util.CatalogueManager import CatalogueManager
 from util.GlobalVarManager import GlobalVarManager
-from util.SingletonCatalogueManager import SingletonCatalogueManager
+
 
 
 class CatalogueMenu(QMenu):
@@ -25,9 +26,9 @@ class CatalogueMenu(QMenu):
     def process_trigger(self, act):
         if act == self.act_refresh:
             # 图转树
-            GlobalVarManager.lattice_editor.translate_lattice_to_tree()
+            GlobalVarManager.lattice_edt.translate_lattice_to_tree()
             # 从数据库中加载目录树
-            SingletonCatalogueManager.instance().init_catalogue()
+            CatalogueManager().init_catalogue()
             # 初始化目录参数
             self._tv_catalogue.setColumnWidth(0, 300)
         elif act == self.act_expand_all:

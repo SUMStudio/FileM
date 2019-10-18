@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QMenu, QAction
 
 from gui.dialog.AddFileDialog import AddFileDialog
 from model.FileModel import FileModel
-from util.SingletonFileManager import SingletonFileManager
+from util.FileManager import FileManager
 
 
 class FileEditMenu(QMenu):
@@ -26,12 +26,12 @@ class FileEditMenu(QMenu):
 
     def process_trigger(self, act):
         if act == self.act_open_file:
-            abs_path = SingletonFileManager.instance().get_abs_path(self._index.data())
+            abs_path = FileManager().get_abs_path(self._index.data())
             os.system("\"{}\"".format(abs_path))
         elif act == self.act_del_file:
-            SingletonFileManager.instance().delete_file(self._index)
+            FileManager().delete_file(self._index)
         elif act == self.act_edit_label:
-            abs_path = SingletonFileManager.instance().get_abs_path(self._index.data())
+            abs_path = FileManager().get_abs_path(self._index.data())
             file_model = FileModel()
             file_model.abs_path = abs_path
             AddFileDialog(file_model=file_model, index=self._index).exec_()

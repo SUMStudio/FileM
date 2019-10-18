@@ -253,9 +253,9 @@ class LatticeEditor:
                         concept_p_c = lattice_model.get_node_base_on_id(concept_p_c_id)
                         # 若Cpc没有cs标记，即不是更新或删除节点
                         # 且 Cpc不是原节点C
-                        # 且 Cdb删除基内涵包含于Cpc的内涵(即两个节点间已经存在了偏序关系)
-                        if (concept_p_c not in cs) & (concept_p_c != concept) & concept_db.intents.issubset(
-                                concept_p_c.intents):
+                        # 且 Cpc包含于Cdb删除基内涵的内涵(即两个节点间已经存在了偏序关系)
+                        if (concept_p_c not in cs) & (concept_p_c != concept) & concept_p_c.intents.issubset(
+                                concept_db.intents):
                             # 那么不需要新增边
                             need_edge = False
                             break

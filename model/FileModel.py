@@ -42,14 +42,6 @@ class FileModel:
     def file_name(self):
         return self._file_name
 
-    def object2json(self):
-        return {
-            'abs_path': self.abs_path,
-            'label_list': self.label_list
-        }
 
-    def load_json_dict(self, json_dict):
-        self.abs_path = json_dict['abs_path']
-        self.label_list = json_dict['label_list']
 
 
