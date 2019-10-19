@@ -56,16 +56,17 @@ class FileM(QMainWindow, Ui_FileM):
 
     def init_tv_catalogue(self):
         self.tv_catalogue.setModel(CatalogueManager().cat_list_model)
+        self.tv_catalogue.selectionModel().selectionChanged.connect(self._controller.on_selected_changed)
         self.tv_catalogue.customContextMenuRequested[QPoint].connect(self._controller.on_menu_requested)
 
     def init_lv_file(self):
         self.lv_file.setModel(FileManager().file_list_model)
-        self.lv_file.selectionModel().selectionChanged.connect(self._controller.on_lv_changed)
+        self.lv_file.selectionModel().selectionChanged.connect(self._controller.on_selected_changed)
         self.lv_file.customContextMenuRequested[QPoint].connect(self._controller.on_menu_requested)
 
     def init_lv_label(self):
         self.lv_label.setModel(FileLabelManager().label_list_model)
-        self.lv_label.selectionModel().selectionChanged.connect(self._controller.on_lv_changed)
+        self.lv_label.selectionModel().selectionChanged.connect(self._controller.on_selected_changed)
         self.lv_label.customContextMenuRequested[QPoint].connect(self._controller.on_menu_requested)
 
     def init_toolbar(self):
@@ -79,7 +80,7 @@ class FileM(QMainWindow, Ui_FileM):
 
     def dragEnterEvent(self, evn):
         # 鼠标拖入窗口事件，待续
-        self.lb_info.setText('文件路径：\n' + evn.mimeData().text())
+        # self.lb_info.setText('文件路径：\n' + evn.mimeData().text())
         # 鼠标放开函数事件
         evn.accept()
 
@@ -92,6 +93,8 @@ class FileM(QMainWindow, Ui_FileM):
             # 初始化文件模型
             file_model = FileModel()
             file_model.abs_path = file_path
+            # 标签信息
+            self._controller.show_message("文件路径:"+url.toLocalFile())
             # 弹出文件标签编辑框
             AddFileDialog(file_model).exec_()
 

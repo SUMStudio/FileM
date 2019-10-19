@@ -24,9 +24,9 @@ class LabelEditMenu(QMenu):
         if act == self.act_add_label:
             new_label, ok = QInputDialog.getText(None, "新增标签", "请输入新标签名：")
             if ok:
-                if FileLabelManager().instance().add_label(new_label):
+                if FileLabelManager().add_label(new_label):
                     print('添加标签成功')
         elif act == self.act_remove_label:
-            FileLabelManager().instance().remove_label(self._index)
+            FileLabelManager().remove_label(self._index)
         elif act == self.act_label_info:
             pass

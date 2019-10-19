@@ -167,8 +167,8 @@ class LatticeEditor:
                         concept_c_p = lattice_model.get_node_base_on_id(concept_c_p_id)
                         # 若Ccp没有cs标记，即不是更新或删除节点
                         # 且 Ccp不是原节点C
-                        # 且 Ccp的外延包含于Cdb删除基外延(即两个节点间已经存在了偏序关系)
-                        if (concept_c_p not in cs) & (concept_c_p != concept) & concept_c_p.extents.issubset(
+                        # 且 Ccp的外延包含于Cdb删除基外延(即两个节点间存在偏序关系)
+                        if (concept_c_p not in cs) & (concept_c_p.id != concept.id) & concept_c_p.extents.issubset(
                                 concept_db.extents):
                             # 那么不需要新增边
                             need_edge = False
@@ -253,8 +253,8 @@ class LatticeEditor:
                         concept_p_c = lattice_model.get_node_base_on_id(concept_p_c_id)
                         # 若Cpc没有cs标记，即不是更新或删除节点
                         # 且 Cpc不是原节点C
-                        # 且 Cpc包含于Cdb删除基内涵的内涵(即两个节点间已经存在了偏序关系)
-                        if (concept_p_c not in cs) & (concept_p_c != concept) & concept_p_c.intents.issubset(
+                        # 且 Cpc包含于Cdb删除基内涵的内涵(即两个节点间存在了偏序关系)
+                        if (concept_p_c not in cs) & (concept_p_c.id!= concept.id) & concept_p_c.intents.issubset(
                                 concept_db.intents):
                             # 那么不需要新增边
                             need_edge = False
