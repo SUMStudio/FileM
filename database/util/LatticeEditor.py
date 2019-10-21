@@ -183,6 +183,11 @@ class LatticeEditor:
                 # 取消该节点的cs标记
                 cs.discard(concept.id)
         # TODO  取消集合VSet中节点的vs标记
+        # 如果格的节点数量为1,显然其为sup节点，若其内涵为空，则清空格
+        if lattice_model.get_node_count()==1:
+            sup = lattice_model.get_sup_node()
+            if len(sup.intents)==0:
+                lattice_model.delete_all()
 
     # 与remove_attribute形成对偶
     def remove_object(self, object: str):
@@ -270,13 +275,20 @@ class LatticeEditor:
                 # 取消该节点的cs标记
                 cs.discard(concept.id)
         # TODO  取消集合VSet中节点的vs标记
+        # 如果格的节点数量为1,显然其为inf节点，若其外延为空，则清空格
+        if lattice_model.get_node_count()==1:
+            inf = lattice_model.get_inf_node()
+            if len(inf.extents)==0:
+                lattice_model.delete_all()
 
     def translate_lattice_to_tree(self):
         tree_model = self._tree_model
         lattice_model = self._lattice_model
         # 先清空树
         tree_model.delete_all()
-
+        # 如果格为空，则不执行算法
+        if lattice_model.get_node_count() == 0:
+            return
         sup = lattice_model.get_sup_node()
         count = 0
         # 遍历数据库按内涵势排序生成id

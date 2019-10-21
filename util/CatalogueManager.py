@@ -44,14 +44,25 @@ class CatalogueManager:
             is_file = True
         node_name_list = path[depth]
         for node_name in node_name_list:
-            note_str = "文件" if is_file else "文件夹"
-            icon = QIcon(self._root_abs_path + "\\resources\\folder.png") if not is_file else IconExtractor(
-                self._file_mgr.get_abs_path(node_name)).get_icon()
-            node_item = QStandardItem(icon, node_name)
-            path_str += "\\" + node_name
-            path_item = QStandardItem(path_str)
-            note_item = QStandardItem(note_str)
-            parent_item.appendRow([node_item, path_item, note_item])
+            # 检查节点名在是否重复
+            index = 0
+            child_item = parent_item.child(index)
+            while child_item:
+                child_name = child_item.index().data()
+                if child_name == node_name:
+                    node_item = child_item
+                    break
+                index += 1
+                child_item = parent_item.child(index)
+            else:
+                note_str = "文件" if is_file else "文件夹"
+                icon = QIcon(self._root_abs_path + "\\resources\\folder.png") if not is_file else IconExtractor(
+                    self._file_mgr.get_abs_path(node_name)).get_icon()
+                node_item = QStandardItem(icon, node_name)
+                path_str += "\\" + node_name
+                path_item = QStandardItem(path_str)
+                note_item = QStandardItem(note_str)
+                parent_item.appendRow([node_item, path_item, note_item])
             self._add_path(path, depth + 1, node_item, path_str, path_len)
 
     @property
